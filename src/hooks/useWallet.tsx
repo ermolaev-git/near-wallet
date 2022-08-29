@@ -19,27 +19,29 @@ const useWallet = (): WalletResponse => {
   const [wallet, setWallet] = useState<WalletConnection | null>();
 
   useEffect(() => {
-    const connectWallet = async () => {
-      const connectionConfig = {
-        networkId: 'testnet',
-        keyStore: new keyStores.BrowserLocalStorageKeyStore(),
-        nodeUrl: 'https://rpc.testnet.near.org',
-        walletUrl: 'https://wallet.testnet.near.org',
-        helperUrl: 'https://helper.testnet.near.org',
-        explorerUrl: 'https://explorer.testnet.near.org',
-      };
+    if (!wallet) {
+      connectWallet();
+    }
+  }, [wallet]);
 
-      const nearConnection = await connect(connectionConfig);
-      const walletConnection = new WalletConnection(
-        nearConnection,
-        'near-wallet-app'
-      );
-
-      setWallet(walletConnection);
+  const connectWallet = async () => {
+    const connectionConfig = {
+      networkId: 'testnet',
+      keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+      nodeUrl: 'https://rpc.testnet.near.org',
+      walletUrl: 'https://wallet.testnet.near.org',
+      helperUrl: 'https://helper.testnet.near.org',
+      explorerUrl: 'https://explorer.testnet.near.org',
     };
 
-    connectWallet();
-  }, []);
+    const nearConnection = await connect(connectionConfig);
+    const walletConnection = new WalletConnection(
+      nearConnection,
+      'near-wallet-app'
+    );
+
+    setWallet(walletConnection);
+  };
 
   const signIn = () => wallet?.requestSignIn({ contractId: CONTRACT_ID });
 

@@ -61,8 +61,8 @@ const MarketTable: React.FC<MarketTableProps> = ({ data, market }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.ask_orders.map((order) => (
-            <MarketTableCell order={order} />
+          {data.ask_orders.map((order, index) => (
+            <MarketTableCell key={index} order={order} />
           ))}
         </Tbody>
       </Table>
@@ -80,8 +80,8 @@ const MarketTable: React.FC<MarketTableProps> = ({ data, market }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.bid_orders.map((order) => (
-            <MarketTableCell order={order} />
+          {data.bid_orders.map((order, index) => (
+            <MarketTableCell key={index} order={order} />
           ))}
         </Tbody>
       </Table>
